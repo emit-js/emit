@@ -8,21 +8,21 @@ Javascript event emitter standard powering a new library ecosystem.
 
 We aim to define a standard modern event emitter API.
 
-Using this standard API, we are building an ecosystem of **observable libraries**.
+Using this standard API, **we are building an ecosystem of observable libraries**.
 
 Libraries export "emit composers" — functions that take an emitter instance and add listeners to it.
 
-We engineered emit with dynamic imports, modularity, and small file sizes in mind.
+We engineer emit with dynamic imports, modularity, and small file sizes in mind.
 
 ## The effects
 
-Any listener can succinctly access the functionality of the entire application through its `emit` argument.
+Any listener can access the functionality of the entire application through its `emit` argument.
 
 The end user can dynamically add functionality (such as logging) to listeners with minimal to no code changes.
 
 Our pattern prescribes library decoupling at the npm dependency level. The user is in full control over library versioning and composition.
 
-Libraries can flexibly degrade functionality if it is not included by the end user.
+Libraries can flexibly degrade functionality if the user chooses not to include it.
 
 ## Your first listener
 
