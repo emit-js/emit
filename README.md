@@ -8,11 +8,11 @@ Standardizing the javascript event emitter and powering a new library ecosystem.
 
 Libraries do interesting things when they can observe each other.
 
-We aim to standardize an event emitter API with features like async listener support, event cancellation, and return values.
+We aim to standardize an event emitter API with features like async listeners and return value signalling.
 
-We prescribe a way of implementing libraries as a function that receives an event emitter and attaches functionality to it.
+An emit library exports a function that receives an event emitter. As the event emitter passes through these library functions, they add and modify functionality.
 
-Emit libraries are decoupled within npm. The end user is in full control over the libraries that compose their event emitter.
+Emit libraries are completely decoupled within npm (even when they depend on each other). The end user is in full control over the library versions that compose their event emitter.
 
 ## Emit
 
