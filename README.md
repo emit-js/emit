@@ -10,9 +10,9 @@ Libraries do interesting things when they can observe each other.
 
 We aim to standardize an event emitter API with features like async listeners and return value signalling.
 
-An emit library exports a function that receives an event emitter. As the event emitter passes through these library functions, they add and modify functionality.
+We prescribe a pattern where libraries expose a single function that receives a single event emitter. The end user uses library functions to compose their event emitter in any way they please.
 
-Emit libraries are completely decoupled within npm (even when they depend on each other). The end user is in full control over the library versions that compose their event emitter.
+Libraries are completely decoupled within npm (even when they depend on each other). The end user is in full control over package versioning.
 
 ## Emit
 
