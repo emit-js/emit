@@ -12,7 +12,7 @@ We aim to standardize an event emitter API with features like async listener sup
 
 We prescribe a way of implementing libraries as a function that receives an event emitter and attaches functionality to it.
 
-Emit libraries are decoupled within npm. The end user is in full control over the libraries compose their event emitter.
+Emit libraries are decoupled within npm. The end user is in full control over the libraries that compose their event emitter.
 
 ## Emit
 
