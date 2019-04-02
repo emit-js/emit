@@ -1,25 +1,25 @@
 /* global Promise */
 /* eslint-env jest */
 
-var dot
+var emit
 
 beforeEach(function() {
-  dot = require("./dot")()
+  emit = require("./emit")()
 })
 
 describe("opt", function() {
   test("last string", function() {
     var args
 
-    dot.on("a", "b", "c", function() {
+    emit.on("a", "b", "c", function() {
       args = Array.prototype.slice.call(arguments)
     })
 
-    return dot("a", "b", "c").then(function() {
+    return emit("a", "b", "c").then(function() {
       expect(args).toEqual([
         ["b", "c"],
         undefined,
-        dot,
+        emit,
         "a",
         {
           valuePromise: expect.any(Promise),
@@ -31,15 +31,15 @@ describe("opt", function() {
   test("first string", function() {
     var args
 
-    dot.on("a", function() {
+    emit.on("a", function() {
       args = Array.prototype.slice.call(arguments)
     })
 
-    return dot("a").then(function() {
+    return emit("a").then(function() {
       expect(args).toEqual([
         [],
         undefined,
-        dot,
+        emit,
         "a",
         {
           valuePromise: expect.any(Promise),
@@ -51,15 +51,15 @@ describe("opt", function() {
   test("first non-string", function() {
     var args
 
-    dot.on(function() {
+    emit.on(function() {
       args = Array.prototype.slice.call(arguments)
     })
 
-    return dot(true).then(function() {
+    return emit(true).then(function() {
       expect(args).toEqual([
         [],
         true,
-        dot,
+        emit,
         undefined,
         {
           valuePromise: expect.any(Promise),

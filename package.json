@@ -1,20 +1,20 @@
 {
-  "name": "dot-event",
+  "name": "emit-js",
   "version": "3.2.2",
-  "description": "Powerful event emitter",
+  "description": "Self-contained event emitters powering a new library ecosystem",
   "keywords": [
     "event",
     "emitter",
     "listener"
   ],
-  "author": "dot-event <oss@dot-event.io>",
+  "author": "emit <emit@emit-js.com>",
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/dot-event/dot-event.git"
+    "url": "git+ssh://git@github.com/emit-js/emit.git"
   },
   "license": "MIT",
-  "homepage": "https://github.com/dot-event/dot-event#readme",
-  "main": "dot.js",
+  "homepage": "https://github.com/emit-js/emit#readme",
+  "main": "emit.js",
   "scripts": {
     "fix": "npm run lint -- --fix",
     "lint": "eslint --ignore-path .gitignore --ext=js .",

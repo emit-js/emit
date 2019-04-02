@@ -8,26 +8,26 @@ var empty = "",
   period = ".",
   strType = "string"
 
-// `dot` instance factory
+// `emit` instance factory
 //
-module.exports = function dot() {
-  var dot,
+module.exports = function emit() {
+  var emit,
     r = {}
 
-  dot = r.dot = setup.bind({ fn: emit, r: r })
+  emit = r.emit = setup.bind({ fn: emitBase, r: r })
 
-  dot.state = {
+  emit.state = {
     any: new Map(),
     events: new Set(),
     on: new Map(),
   }
 
-  dot.add = add.bind({ r: r })
-  dot.any = setup.bind({ fn: on, m: "any", r: r })
-  dot.on = setup.bind({ fn: on, m: "on", r: r })
-  dot.off = setup.bind({ fn: off, r: r })
+  emit.add = add.bind({ r: r })
+  emit.any = setup.bind({ fn: on, m: "any", r: r })
+  emit.on = setup.bind({ fn: on, m: "on", r: r })
+  emit.off = setup.bind({ fn: off, r: r })
 
-  return dot
+  return emit
 }
 
 // Emit "any" listener functions
@@ -69,7 +69,7 @@ function emitOn(a, k, m, p, pr, r, s) {
   if (set) {
     set.forEach(function(fn) {
       if (!s.cancel) {
-        var out = fn(p.arr, s.arg || a, r.dot, p.event, s)
+        var out = fn(p.arr, s.arg || a, r.emit, p.event, s)
         if (out && out.then) {
           pr.push(out)
         } else if (out !== undefined) {
@@ -82,7 +82,7 @@ function emitOn(a, k, m, p, pr, r, s) {
 
 // Emit "on" and "any" listener functions
 //
-function emit(a, k, m, p, r) {
+function emitBase(a, k, m, p, r) {
   // a - arg
   // k - key
   // p - props
@@ -91,7 +91,7 @@ function emit(a, k, m, p, r) {
   //
   var pr = [],
     s = {},
-    state = r.dot.state
+    state = r.emit.state
 
   emitAny(a, k, state.any, p, pr, r, s)
   emitOn(a, k, state.on, p, pr, r, s)
@@ -132,7 +132,7 @@ function emitReturn(a, p, promise, r, s) {
 
   // prettier-ignore
   return hasValueFn
-    ? s.valueFn(p.arr, s.arg || a, r.dot, p.event, s)
+    ? s.valueFn(p.arr, s.arg || a, r.emit, p.event, s)
     : hasValue
       ? s.value :
       s.valuePromise
@@ -141,13 +141,13 @@ function emitReturn(a, p, promise, r, s) {
 // Run composer from promise (dynamic import).
 //
 function add(promise) {
-  var dot = this.r.dot,
-    s = dot.state
+  var emit = this.r.emit,
+    s = emit.state
 
   if (promise.then) {
     promise = promise.then(function(lib) {
       return lib && lib.default
-        ? (lib.default.default || lib.default)(dot)
+        ? (lib.default.default || lib.default)(emit)
         : lib
     })
 
@@ -169,7 +169,7 @@ function off(a, k, m, p, r) {
   // m - map
   // r - refs
   //
-  var s = r.dot.state,
+  var s = r.emit.state,
     set = s[m].get(k.str)
 
   if (a && set) {
@@ -190,7 +190,7 @@ function on(a, k, m, p, r) {
     return
   }
 
-  var s = r.dot.state,
+  var s = r.emit.state,
     set
 
   if (s[m].has(k.str)) {
@@ -200,10 +200,10 @@ function on(a, k, m, p, r) {
     s[m].set(k.str, set)
 
     if (m === "any" && p.event && !p.length) {
-      r.dot[p.event] =
-        r.dot[p.event] ||
+      r.emit[p.event] =
+        r.emit[p.event] ||
         setup.bind({
-          fn: emit,
+          fn: emitBase,
           p: p,
           r: r,
           s: s,

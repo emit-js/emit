@@ -1,21 +1,21 @@
 /*global Promise*/
 /* eslint-env jest */
 
-var dot
+var emit
 
 beforeEach(function() {
-  dot = require("./dot")()
+  emit = require("./emit")()
 })
 
-describe("dot", function() {
+describe("emit", function() {
   test("on empty", function() {
     var called
 
-    dot.on(function() {
+    emit.on(function() {
       called = true
     })
 
-    return dot().then(function() {
+    return emit().then(function() {
       expect(called).toBe(true)
     })
   })
@@ -23,11 +23,11 @@ describe("dot", function() {
   test("on string props", function() {
     var called
 
-    dot.on("a", "b.c", function() {
+    emit.on("a", "b.c", function() {
       called = true
     })
 
-    return dot("a", "b", "c").then(function() {
+    return emit("a", "b", "c").then(function() {
       expect(called).toBe(true)
     })
   })
@@ -35,11 +35,11 @@ describe("dot", function() {
   test("on array props", function() {
     var called
 
-    dot.on(["a"], ["b", "c"], function() {
+    emit.on(["a"], ["b", "c"], function() {
       called = true
     })
 
-    return dot("a", "b", "c").then(function() {
+    return emit("a", "b", "c").then(function() {
       expect(called).toBe(true)
     })
   })
@@ -47,16 +47,16 @@ describe("dot", function() {
   test("on args", function() {
     var args
 
-    dot.on(["a", "b"], "c", function() {
+    emit.on(["a", "b"], "c", function() {
       args = Array.prototype.slice.call(arguments)
     })
 
-    return dot("a", "b", "c", { test: true }).then(
+    return emit("a", "b", "c", { test: true }).then(
       function() {
         expect(args).toEqual([
           ["b", "c"],
           { test: true },
-          dot,
+          emit,
           "a",
           {
             valuePromise: expect.any(Promise),
@@ -69,15 +69,15 @@ describe("dot", function() {
   test("on arg", function() {
     var arg
 
-    dot.on(["a", "b"], "c", function(p, a, d, e, sig) {
+    emit.on(["a", "b"], "c", function(p, a, d, e, sig) {
       sig.arg = { test: true }
     })
 
-    dot.on(["a", "b"], "c", function(p, a) {
+    emit.on(["a", "b"], "c", function(p, a) {
       arg = a
     })
 
-    return dot("a", "b", "c", { failed: true }).then(
+    return emit("a", "b", "c", { failed: true }).then(
       function() {
         expect(arg).toEqual({ test: true })
       }
@@ -87,50 +87,50 @@ describe("dot", function() {
   test("on cancel", function() {
     var called
 
-    dot.on(["a", "b"], "c", function(p, a, d, e, sig) {
+    emit.on(["a", "b"], "c", function(p, a, d, e, sig) {
       sig.cancel = true
     })
 
-    dot.on("a", "b", "c", function() {
+    emit.on("a", "b", "c", function() {
       called = true
     })
 
-    return dot("a", "b", "c").then(function() {
+    return emit("a", "b", "c").then(function() {
       expect(called).not.toBe(true)
     })
   })
 
   test("on value", function() {
-    dot.on(["a", "b"], "c", function(p, a, d, e, sig) {
+    emit.on(["a", "b"], "c", function(p, a, d, e, sig) {
       sig.value = true
     })
 
-    expect(dot("a", "b", "c")).toBe(true)
+    expect(emit("a", "b", "c")).toBe(true)
   })
 
   test("on value (from function)", function() {
-    dot.on(["a", "b"], "c", function(p, a, d, e, sig) {
+    emit.on(["a", "b"], "c", function(p, a, d, e, sig) {
       sig.valueFn = function() {
         return true
       }
     })
 
-    expect(dot("a", "b", "c")).toBe(true)
+    expect(emit("a", "b", "c")).toBe(true)
   })
 
   test("on value (from return)", function() {
-    dot.on(["a", "b"], "c", function() {
+    emit.on(["a", "b"], "c", function() {
       return true
     })
 
-    expect(dot("a", "b", "c")).toBe(true)
+    expect(emit("a", "b", "c")).toBe(true)
   })
 
   test("on value (from promise)", function(done) {
-    dot.on(["a", "b"], "c", function(
+    emit.on(["a", "b"], "c", function(
       prop,
       arg,
-      dot,
+      emit,
       e,
       sig
     ) {
@@ -142,7 +142,7 @@ describe("dot", function() {
       })
     })
 
-    dot("a", "b", "c").then(function(arg) {
+    emit("a", "b", "c").then(function(arg) {
       expect(arg).toBe("hi")
       done()
     })
@@ -151,11 +151,11 @@ describe("dot", function() {
   test("onAny empty", function() {
     var called
 
-    dot.any(function() {
+    emit.any(function() {
       called = true
     })
 
-    return dot("a", "b", "c").then(function() {
+    return emit("a", "b", "c").then(function() {
       expect(called).toBe(true)
     })
   })
@@ -163,11 +163,11 @@ describe("dot", function() {
   test("onAny props", function() {
     var called
 
-    dot.any("a", function() {
+    emit.any("a", function() {
       called = true
     })
 
-    return dot("a", "b", "c").then(function() {
+    return emit("a", "b", "c").then(function() {
       expect(called).toBe(true)
     })
   })
@@ -175,17 +175,17 @@ describe("dot", function() {
   test("off", function() {
     var called, called2
 
-    var off = dot.on("a", "b", "c", function() {
+    var off = emit.on("a", "b", "c", function() {
       called = true
     })
 
-    dot.on("a", "b", "c", function() {
+    emit.on("a", "b", "c", function() {
       called2 = true
     })
 
     off()
 
-    return dot("a", "b", "c").then(function() {
+    return emit("a", "b", "c").then(function() {
       expect(called).not.toBe(true)
       expect(called2).toBe(true)
     })
@@ -194,11 +194,11 @@ describe("dot", function() {
   test("emit helper without props", function() {
     var called
 
-    dot.any("a", function() {
+    emit.any("a", function() {
       called = true
     })
 
-    return dot.a().then(function() {
+    return emit.a().then(function() {
       expect(called).toBe(true)
     })
   })
