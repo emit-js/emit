@@ -54,8 +54,8 @@ describe("emit", function() {
     return emit("a", "b", "c", { test: true }).then(
       function() {
         expect(args).toEqual([
-          ["b", "c"],
           { test: true },
+          ["b", "c"],
           emit,
           "a",
           {
@@ -69,11 +69,11 @@ describe("emit", function() {
   test("on arg", function() {
     var arg
 
-    emit.on(["a", "b"], "c", function(p, a, d, e, sig) {
+    emit.on(["a", "b"], "c", function(a, p, e, id, sig) {
       sig.arg = { test: true }
     })
 
-    emit.on(["a", "b"], "c", function(p, a) {
+    emit.on(["a", "b"], "c", function(a) {
       arg = a
     })
 

@@ -17,8 +17,8 @@ describe("opt", function() {
 
     return emit("a", "b", "c").then(function() {
       expect(args).toEqual([
-        ["b", "c"],
         undefined,
+        ["b", "c"],
         emit,
         "a",
         {
@@ -37,8 +37,8 @@ describe("opt", function() {
 
     return emit("a").then(function() {
       expect(args).toEqual([
-        [],
         undefined,
+        [],
         emit,
         "a",
         {
@@ -57,8 +57,8 @@ describe("opt", function() {
 
     return emit(true).then(function() {
       expect(args).toEqual([
-        [],
         true,
+        [],
         emit,
         undefined,
         {

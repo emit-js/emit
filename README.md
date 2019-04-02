@@ -76,11 +76,22 @@ No matter what is passed to `emit`, listener functions always receive five argum
 
 | Argument                     | Description                 |
 | ---------------------------- | --------------------------- |
-| [`prop`](#props)             | Array of string identifiers |
 | [`arg`](#emit-argument)      | Emit argument               |
+| [`prop`](#props)             | Array of string identifiers |
 | [`emit`](#composer-pattern)  | Emit instance               |
 | [`event`](#event-id)         | Event id                    |
 | [`signal`](#signal-argument) | Signal object               |
+
+### Emit argument
+
+The last non-prop argument becomes the emit argument (`arg`).
+
+```js
+emit.on((arg, prop) => arg)
+emit({ option: true }) // { option: true }
+```
+
+> ℹ️ The listener function receives the emit argument as its [second argument](#listener-arguments).
 
 ### Props
 
@@ -93,21 +104,10 @@ emit("myEvent", "prop") // [ "prop" ]
 
 > ℹ️ The listener function receives the prop array as its [first argument](#listener-arguments).
 
-### Emit argument
-
-The last non-prop argument becomes the emit argument (`arg`).
-
-```js
-emit.on((prop, arg) => arg)
-emit({ option: true }) // { option: true }
-```
-
-> ℹ️ The listener function receives the emit argument as its [second argument](#listener-arguments).
-
 ### Signal argument
 
 ```js
-emit.on((prop, arg, emit, eventId, signal) => {
+emit.on((arg, prop, emit, eventId, signal) => {
   signal.cancel = true
   return "value"
 })
@@ -153,7 +153,7 @@ export default function(emit) {
   emit.any("myEvent", myEvent)
 }
 
-async function myEvent(prop, arg, emit) {
+async function myEvent(arg, prop, emit) {
   prop = prop.concat(["myEvent"])
   await emit.otherEvent(prop)
 }
