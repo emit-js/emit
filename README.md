@@ -14,7 +14,7 @@ Libraries export "emit composers" — functions that simply add listeners to an 
 
 ## The effects
 
-Listeners have easy access to the entire application through its `emit` argument.
+Listeners have easy access to any other listener via the `emit` argument. This small feature has big effects in decreasing loc.
 
 The end user can dynamically add functionality (such as logging) to listeners with minimal to no code changes.
 
