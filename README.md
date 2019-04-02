@@ -4,15 +4,23 @@ Standardizing the javascript event emitter and powering a new library ecosystem.
 
 ![emit](emit.gif)
 
-## Motivation
+## The vision
 
-Libraries do interesting things when they can observe each other.
+We want to build an ecosystem of **observable libraries**.
 
-We aim to standardize an event emitter API with features like async listeners and return value signalling.
+We aim to define a standard event emitter API with necessary features like async listeners and return values.
 
-The end user composes their event emitter using "emit composer" functions that receive an event emitter as a single argument and have no return value.
+Libraries exist as "emit composers" -- functions that take an emit instance and add functionality to it.
 
-Composers are completely decoupled within npm (even when they depend on each other). The end user is in full control over package versioning and emitter composition.
+Composer libraries should aim to be small and modular. The emit library itself is <1kb gzipped & compressed.
+
+## The effects
+
+Because all emits are observable, the end user can easily add features like **logging**, **cli access**, **documentation auto-generation**, **type checking**, and more to any emit.
+
+As a rule, emit composer libraries are completely decoupled as npm dependencies. The end user is in full control over package versioning and emitter composition.
+
+When companion emit composers are not included by the end user, it should be easy to degrade functionality that relies on them.
 
 ## Emit events
 
