@@ -35,7 +35,7 @@ Its simple to [wait for all emit listeners](#wait-for-pending-events) before ren
 ## Setup
 
 ```js
-const emit = require("emit")()
+const emit = require("@emit-js/emit")()
 ```
 
 ## Basics
@@ -72,7 +72,7 @@ emit("myEvent") // "value"
 
 ## Listener arguments
 
-No matter what is passed to the `emit` emitter, listener functions always receive five arguments:
+No matter what is passed to `emit`, listener functions always receive five arguments:
 
 | Argument                     | Description                 |
 | ---------------------------- | --------------------------- |
