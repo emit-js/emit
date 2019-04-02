@@ -10,9 +10,9 @@ Libraries do interesting things when they can observe each other.
 
 We aim to standardize an event emitter API with features like async listeners and return value signalling.
 
-We prescribe a pattern where libraries expose a single function that receives a single event emitter. The end user uses library functions to compose their event emitter in any way they please.
+The end user composes their event emitter using "emit composer" functions that receive an event emitter as a single argument and have no return value.
 
-Libraries are completely decoupled within npm (even when they depend on each other). The end user is in full control over package versioning.
+Composers are completely decoupled within npm (even when they depend on each other). The end user is in full control over package versioning and emitter composition.
 
 ## Emit
 
