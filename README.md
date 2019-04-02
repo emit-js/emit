@@ -14,7 +14,7 @@ The end user composes their event emitter using "emit composer" functions that r
 
 Composers are completely decoupled within npm (even when they depend on each other). The end user is in full control over package versioning and emitter composition.
 
-## Emit
+## Emit an event
 
 ```js
 var emit = require("@emit-js/emit")()
@@ -28,11 +28,11 @@ emit("eventId", "prop", "prop2", { arg: true })
 
 The `emit` function takes:
 
-- an `eventId` string
-- any number of `prop` strings (or array of strings)
+- a single event id string
+- any number of "prop" identifier strings (or array of strings)
 - a single argument of any type (except string or array of strings)
 
-## Listen
+## Listen to an emit
 
 ```js
 emit.any((arg, prop) => {})
