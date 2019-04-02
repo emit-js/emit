@@ -40,11 +40,11 @@ await emit("eventId", "p1", "p2", { opt: true }) // "return value"
 
 > ℹ️ Listeners can be synchronous or asynchronous
 
-> ℹ️ Listener arguments -- `arg`, `prop`, `emit` (APE)
+> ℹ️ Standard listener arguments — `arg`, `prop`, `emit` (APE)
 
-> ℹ️ `emit.any` listens to **any** event id / prop combination at the same depth or greater.
+> ℹ️ `emit.any` listens to **any** event id & prop combination at the same depth or greater
 
-> ℹ️ `emit.on` listens to an **exact** event id / prop combination.
+> ℹ️ `emit.on` listens to an **exact** event id & prop combination
 
 ## Emit examples
 
@@ -70,8 +70,6 @@ emit.any(async (arg, prop, emit) => {})
 emit.any("eventId", (arg, prop, emit) => {})
 emit.any("eventId", "prop", async (arg, prop, emit) => {})
 ```
-
-> listener arguments -- `arg`, `prop`, `emit` (APE)
 
 ## Composer pattern
 
