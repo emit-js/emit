@@ -16,17 +16,39 @@ Composer libraries should aim to be small and modular. The emit library itself i
 
 ## The effects
 
-The end user can easily add features like **logging**, **cli access**, **documentation auto-generation**, and **type checking** to existing code with minimal or no changes.
+The end user can easily add features like **logging**, **cli access**, **documentation generation**, and **type checking** to existing code with minimal or no changes.
 
 Emit composer libraries are completely decoupled as npm dependencies. The end user is in full control over package versioning and emitter composition.
 
 When companion emit composers are not included by the end user, it should be easy to degrade functionality that relies on them.
 
-## Emit events
+## Kitchen sink example
 
 ```js
 var emit = require("@emit-js/emit")()
 
+emit.any("eventId", async (arg, prop, emit) => {
+  expect(arg).toEqual({ opt: true })
+  expect(prop).toEqual(["p1", "p2"])
+  expect(emit).toEqual(expect.any(Function))
+
+  return "return value"
+})
+
+await emit("eventId", "p1", "p2", { opt: true }) // "return value"
+```
+
+> ℹ️ Listeners can be synchronous or asynchronous
+
+> ℹ️ Listener arguments -- `arg`, `prop`, `emit` (APE)
+
+> ℹ️ `emit.any` listens to **any** event id / prop combination at the same depth or greater.
+
+> ℹ️ `emit.on` listens to an **exact** event id / prop combination.
+
+## Emit examples
+
+```js
 emit()
 emit("eventId")
 emit("eventId", "prop")
@@ -40,18 +62,16 @@ The `emit` function takes:
 - any number of "prop" identifier strings (or array of strings)
 - a single argument of any type (except string or array of strings)
 
-## Listen to an emit
+## Listen examples
 
 ```js
-emit.any((arg, prop) => {})
-emit.any(async (arg, prop) => {})
-emit.any("eventId", (arg, prop) => {})
-emit.any("eventId", "prop", async (arg, prop) => {})
+emit.any((arg, prop, emit) => {})
+emit.any(async (arg, prop, emit) => {})
+emit.any("eventId", (arg, prop, emit) => {})
+emit.any("eventId", "prop", async (arg, prop, emit) => {})
 ```
 
-> `emit.any` listens to **any** event id and/or prop combination.
-
-> `emit.on` listens to an **exact** event id and/or prop combination.
+> listener arguments -- `arg`, `prop`, `emit` (APE)
 
 ## Composer pattern
 
