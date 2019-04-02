@@ -6,45 +6,42 @@ Javascript event emitter standard powering a new library ecosystem.
 
 ## The vision
 
-We want to build an ecosystem of **observable libraries**.
+We aim to define a standard modern event emitter API.
 
-We aim to define a standard event emitter API with necessary features like async listeners and return values.
+Using this API, we are building an ecosystem of **observable libraries**.
 
-Libraries exist as "emit composers" -- functions that take an emit instance and add functionality to it.
-
-Composer libraries should aim to be small and modular. The emit library itself is <1kb gzipped & compressed.
+Libraries expose functionality as "emit composers" -- functions that take an emitter instance and add listeners to it.
 
 ## The effects
 
-The end user can easily add features like **logging**, **cli access**, **documentation generation**, and **type checking** to existing code with minimal to no changes.
+The end user can easily add functionality (such as logging) to listeners with minimal to no changes.
 
-Emit composer libraries are completely decoupled as npm dependencies. The end user is in full control over package versioning and emitter composition.
+Our pattern prescribes libraries be decoupled as far as npm is concerned. The user is in full control over versioning and composition.
 
-When companion emit composers are not included by the end user, it should be easy to degrade functionality that relies on them.
+Libraries can more flexibly degrade functionality if it is not included by the end user.
 
-## Kitchen sink example
+## Your first listener
+
+Let's use `emit.any` to listen to any emit:
 
 ```js
 var emit = require("@emit-js/emit")()
 
-emit.any("eventId", async (arg, prop, emit) => {
-  arg // { opt: true }
-  prop // ["p1", "p2"]
-  emit // emit function
+emit.any((arg, prop, emit, event) => {
+  arg // { option: true }
+  prop // ["prop"]
+  emit // emit
+  event // "event"
 
   return "return value"
 })
 
-await emit("eventId", "p1", "p2", { opt: true }) // "return value"
+emit("event", "prop", { option: true }) // "return value"
 ```
 
-> ℹ️ Listeners can be synchronous or asynchronous
+> ℹ️ Listeners can be sync/async and have return values
 
-> ℹ️ Standard listener arguments — `arg`, `prop`, `emit` (APE)
-
-> ℹ️ `emit.any` listens to **any** event id & prop combination at the same depth or greater
-
-> ℹ️ `emit.on` listens to an **exact** event id & prop combination
+> ℹ️ Standard listener arguments — `arg`, `prop`, `emit`, `event`
 
 ## Emit examples
 
