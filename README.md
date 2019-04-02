@@ -14,7 +14,7 @@ The end user composes their event emitter using "emit composer" functions that r
 
 Composers are completely decoupled within npm (even when they depend on each other). The end user is in full control over package versioning and emitter composition.
 
-## Emit an event
+## Emit events
 
 ```js
 var emit = require("@emit-js/emit")()
