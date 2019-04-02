@@ -1,8 +1,18 @@
-# emit
+# @emit-js/emit
 
-Self-contained event emitters powering a new library ecosystem.
+Standardizing the javascript event emitter and powering a new library ecosystem.
 
 ![emit](emit.gif)
+
+## Motivation
+
+Libraries do interesting things when they can observe each other.
+
+We aim to standardize an event emitter API for (a)sync listeners that receive arguments and return values.
+
+We prescribe a pattern for implementing libraries as composer functions that add emit listeners.
+
+Emit composer libraries are decoupled from each other. The end user is in full control over versioning and composition.
 
 ## Emit
 
@@ -25,9 +35,9 @@ The `emit` function takes:
 ## Listen
 
 ```js
-emit.any((arg, prop) => {}) // or
-emit.any(async (arg, prop) => {}) // or
-emit.any("eventId", (arg, prop) => {}) // or
+emit.any((arg, prop) => {})
+emit.any(async (arg, prop) => {})
+emit.any("eventId", (arg, prop) => {})
 emit.any("eventId", "prop", async (arg, prop) => {})
 ```
 
