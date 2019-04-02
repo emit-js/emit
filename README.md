@@ -4,149 +4,40 @@ Self-contained event emitters powering a new library ecosystem.
 
 ![emit](emit.gif)
 
-## What is it?
-
-Emit creates interfaces for listening to and emitting events.
-
-Listeners can be synchronous or asynchronous, accept arguments, and return values.
-
-Emit has a tiny footprint (<1 kb compressed and gzipped).
-
-### Write less code
-
-Event listeners may emit any event [through the `emit` argument](#listener-arguments), resulting in less `require` calls and easy access to functionality across your application.
-
-### Event id & props
-
-Emit optionally uses [event id](#event-id) and [prop string(s)](#props) to add identifying context to an emit. Props pay off with [logging](https://github.com/emit-js/log#readme), [store updates](https://github.com/emit-js/store#readme), and even [dom element ids](https://github.com/emit-js/el#readme).
-
-### Dynamic composition
-
-Emit uses a [composer function pattern](#composer-pattern) to add event listeners. This pattern works very well with [dynamic imports](#dynamic-imports) to create emit instances with dynamic functionality.
-
-### State
-
-Emit provides basic state via the `emit.state` object. On this object we built an [immutable store](https://github.com/emit-js/store#readme) that leverages props and is only ~1 kb compressed and gzipped.
-
-### SSR-ready
-
-Its simple to [wait for all emit listeners](#wait-for-pending-events) before rendering the final version of your server side page.
-
-## Setup
+## Emit
 
 ```js
-const emit = require("@emit-js/emit")()
+var emit = require("@emit-js/emit")()
+
+emit()
+emit("eventId")
+emit("eventId", "prop")
+emit("eventId", { arg: true })
+emit("eventId", "prop", "prop2", { arg: true })
 ```
 
-## Basics
+The `emit` function takes:
+
+- an `eventId` string
+- any number of `prop` strings (or array of strings)
+- a single argument of any type (except string or array of strings)
+
+## Listen
 
 ```js
-emit.on(() => {}) // listener
-emit() // emitter
+emit.any((arg, prop) => {}) // or
+emit.any(async (arg, prop) => {}) // or
+emit.any("eventId", (arg, prop) => {}) // or
+emit.any("eventId", "prop", async (arg, prop) => {})
 ```
 
-### Return value
+> `emit.any` listens to **any** event id and/or prop combination.
 
-```js
-emit.on(() => "value")
-emit() // "value"
-```
-
-### Async return value
-
-```js
-emit.on(async () => "value")
-emit().then(result => /* "value" */)
-```
-
-### Event id
-
-The event id is the first string argument to `emit.on` or `emit.any`.
-
-```js
-emit.on("myEvent", () => "value")
-emit("myEvent") // "value"
-```
-
-> ℹ️ The listener function receives the event id as its [fourth argument](#listener-arguments).
-
-## Listener arguments
-
-No matter what is passed to `emit`, listener functions always receive five arguments:
-
-| Argument                     | Description                 |
-| ---------------------------- | --------------------------- |
-| [`arg`](#emit-argument)      | Emit argument               |
-| [`prop`](#props)             | Array of string identifiers |
-| [`emit`](#composer-pattern)  | Emit instance               |
-| [`event`](#event-id)         | Event id                    |
-| [`signal`](#signal-argument) | Signal object               |
-
-### Emit argument
-
-The last non-prop argument becomes the emit argument (`arg`).
-
-```js
-emit.on((arg, prop) => arg)
-emit({ option: true }) // { option: true }
-```
-
-> ℹ️ The listener function receives the emit argument as its [second argument](#listener-arguments).
-
-### Props
-
-String arguments after the [event id](#event-id) are prop identifiers.
-
-```js
-emit.on("myEvent", "prop", prop => prop)
-emit("myEvent", "prop") // [ "prop" ]
-```
-
-> ℹ️ The listener function receives the prop array as its [first argument](#listener-arguments).
-
-### Signal argument
-
-```js
-emit.on((arg, prop, emit, eventId, signal) => {
-  signal.cancel = true
-  return "value"
-})
-emit.on(() => "never called")
-emit() // "value"
-```
-
-> ℹ️ There is one other signal, `signal.value`, which you can set instead of using `return` in your listener function.
-
-## Any
-
-```js
-emit.any(() => "!")
-emit("myEvent", "prop") // "!"
-```
-
-### Any with event id
-
-```js
-emit.any("myEvent", prop => prop)
-emit("myEvent", "prop") // [ "prop" ]
-emit.myEvent("prop") // <-- cool helper function!
-```
-
-> ℹ️ Emit creates a helper function only if `emit.any` receives an event id with no props.
-
-### Any with props
-
-```js
-emit.any("myEvent", "prop", "prop2", props => props)
-emit("myEvent") // noop
-emit("myEvent", "prop") // noop
-emit("myEvent", "prop", "prop2") // [ "prop", "prop2" ]
-emit("myEvent", "prop", "prop2", "prop3") // [ "prop", "prop2", "prop3" ]
-```
+> `emit.on` listens to an **exact** event id and/or prop combination.
 
 ## Composer pattern
 
-A common pattern is for composers to define listeners that respond to `any` props of a particular event id.
+A common pattern is for composers to define listeners that respond to `any` props of a particular event id:
 
 ```js
 export default function(emit) {
