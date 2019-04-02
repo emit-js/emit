@@ -10,7 +10,7 @@ We aim to define a standard modern event emitter API.
 
 Using this API, we are building an ecosystem of **observable libraries**.
 
-Libraries expose functionality as "emit composers" -- functions that take an emitter instance and add listeners to it.
+Libraries export "emit composers" -- functions that take an emitter instance and add listeners to it.
 
 ## The effects
 
