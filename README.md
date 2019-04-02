@@ -1,6 +1,6 @@
 # @emit-js/emit
 
-Standardizing the javascript event emitter and powering a new library ecosystem.
+Javascript event emitter standard powering a new library ecosystem.
 
 ![emit](emit.gif)
 
@@ -28,9 +28,9 @@ When companion emit composers are not included by the end user, it should be eas
 var emit = require("@emit-js/emit")()
 
 emit.any("eventId", async (arg, prop, emit) => {
-  expect(arg).toEqual({ opt: true })
-  expect(prop).toEqual(["p1", "p2"])
-  expect(emit).toEqual(expect.any(Function))
+  arg // { opt: true }
+  prop // ["p1", "p2"]
+  emit // emit function
 
   return "return value"
 })
