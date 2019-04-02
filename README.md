@@ -16,9 +16,9 @@ Composer libraries should aim to be small and modular. The emit library itself i
 
 ## The effects
 
-Because all emits are observable, the end user can easily add features like **logging**, **cli access**, **documentation auto-generation**, **type checking**, and more to any emit.
+The end user can easily add features like **logging**, **cli access**, **documentation auto-generation**, and **type checking** to existing code with minimal or no changes.
 
-As a rule, emit composer libraries are completely decoupled as npm dependencies. The end user is in full control over package versioning and emitter composition.
+Emit composer libraries are completely decoupled as npm dependencies. The end user is in full control over package versioning and emitter composition.
 
 When companion emit composers are not included by the end user, it should be easy to degrade functionality that relies on them.
 
