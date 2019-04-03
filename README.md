@@ -44,7 +44,20 @@ module.exports = function(emit) {
 }
 ```
 
+Save this file as `nextLaunch.js`.
+
 ## Using observable libraries
+
+Install dependencies:
+
+```bash
+npm install --save-exact \
+  @emit-js/emit \
+  @emit-js/http \
+  @emit-js/log
+```
+
+Let's compose our emitter and emit `nextLaunch`:
 
 ```js
 // Create emitter
@@ -63,4 +76,10 @@ require("./nextLaunch")(emit)
   // Retrieve next two launches
   await emit.nextLaunch(2)
 })()
+```
+
+Save this file as `emit.js` and run it:
+
+```bash
+LOG=debug node emit.js
 ```
