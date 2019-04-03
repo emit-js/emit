@@ -12,7 +12,7 @@ Using this API, **we aim to build an ecosystem of observable & composable librar
 
 Libraries export "emit composers" — functions that add listeners to the emitter.
 
-Keep things small and fast. The emit library is < 1 kb compressed & gzipped.
+Libraries should be small and universal. The emit library is less than 1 kb compressed & gzipped and works on any browser.
 
 ## Effects
 
@@ -22,7 +22,7 @@ With minimal to no code changes, users can dynamically add functionality (such a
 
 The emit composer pattern decouples libraries at the npm dependency level. End users maintain full control over library versioning and composition.
 
-Emit better enables library authors to flexibly degrade if users choose not to include certain components. Dynamic importing with emit libraries is a breeze.
+Emit better enables library authors to flexibly degrade if users choose not to include certain components. Emit works great with dynamic imports.
 
 ## Your first observable library
 
