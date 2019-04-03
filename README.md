@@ -53,7 +53,8 @@ const emit = require("@emit-js/emit")()
 // Compose emitter
 require("@emit-js/http")(emit)
 require("@emit-js/log")(emit)
-require("./nextLaunch")(emit)(async function() {
+require("./nextLaunch")(emit)
+;(async function() {
   // Retrieve next launch
   await emit.nextLaunch()
 
