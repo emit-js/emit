@@ -44,7 +44,7 @@ module.exports = function(emit) {
 }
 ```
 
-Save this file as `nextLaunch.js`.
+Save the above code as `nextLaunch.js`.
 
 ## Using observable libraries
 
@@ -78,7 +78,7 @@ require("./nextLaunch")(emit)
 })()
 ```
 
-Save this file as `emit.js` and run it:
+Save the above code as `emit.js` and run it:
 
 ```bash
 LOG=debug node emit.js
