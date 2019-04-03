@@ -6,7 +6,7 @@ A javascript event emitter for a new ecosystem of observable libraries.
 
 ## Mission
 
-We aim to define a standard API for event emitting/listening.
+We aim to define a standard API for event emitting.
 
 Using this API, **we aim to build an ecosystem of observable & composable libraries**.
 
@@ -53,11 +53,11 @@ const emit = require("@emit-js/emit")()
 // Compose emitter
 require("@emit-js/http")(emit)
 require("@emit-js/log")(emit)
-require("./nextLaunch")(emit)
+require("./nextLaunch")(emit)(async function() {
+  // Retrieve next launch
+  await emit.nextLaunch()
 
-// Retrieve next launch
-await emit.nextLaunch()
-
-// Retrieve next two launches
-await emit.nextLaunch(2)
+  // Retrieve next two launches
+  await emit.nextLaunch(2)
+})()
 ```
