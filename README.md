@@ -54,6 +54,8 @@ const emit = require("@emit-js/emit")()
 require("@emit-js/http")(emit)
 require("@emit-js/log")(emit)
 require("./nextLaunch")(emit)
+
+// Emit
 ;(async function() {
   // Retrieve next launch
   await emit.nextLaunch()
