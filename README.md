@@ -14,13 +14,13 @@ Libraries export "emit composers" — functions that add listeners to the emitte
 
 ## Effects
 
-It is easy to emit anywhere. Using emit typically reduces lines of code typically devoted to importing and instatiating code.
+Its easy to emit anywhere. Using emit reduces lines of code typically devoted to importing and instatiating code across many files.
 
-End users can dynamically add functionality (such as logging) to listeners with minimal to no code changes.
+With minimal to no code changes, you can dynamically add functionality (such as logging) to all listeners.
 
-The pattern decouples libraries at the npm dependency level. Users maintain full control over library versioning and composition.
+The emit composer pattern decouples libraries at the npm dependency level. End users maintain full control over library versioning and composition.
 
-Emit better enables libraries to flexibly degrade if the end user chooses not to include certain components.
+Emit better enables libraries to flexibly degrade if you choose not to include certain components.
 
 ## Your first observable library
 
