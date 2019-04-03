@@ -14,7 +14,7 @@ Libraries export "emit composers" — functions that add listeners to the emitte
 
 ## Effects
 
-Its easy to emit anywhere. Using emit reduces lines of code typically devoted to importing and instatiating code across many files.
+Using emit reduces lines of code typically devoted to importing and instatiating code across many files.
 
 With minimal to no code changes, you can dynamically add functionality (such as logging) to all listeners.
 
