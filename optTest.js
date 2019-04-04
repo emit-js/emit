@@ -20,8 +20,8 @@ describe("opt", function() {
         undefined,
         ["b", "c"],
         emit,
-        "a",
         {
+          event: "a",
           valuePromise: expect.any(Promise),
         },
       ])
@@ -40,8 +40,8 @@ describe("opt", function() {
         undefined,
         [],
         emit,
-        "a",
         {
+          event: "a",
           valuePromise: expect.any(Promise),
         },
       ])
@@ -60,7 +60,6 @@ describe("opt", function() {
         true,
         [],
         emit,
-        undefined,
         {
           valuePromise: expect.any(Promise),
         },

@@ -57,8 +57,8 @@ describe("emit", function() {
           { test: true },
           ["b", "c"],
           emit,
-          "a",
           {
+            event: "a",
             valuePromise: expect.any(Promise),
           },
         ])
@@ -69,7 +69,7 @@ describe("emit", function() {
   test("on arg", function() {
     var arg
 
-    emit.on(["a", "b"], "c", function(a, p, e, id, sig) {
+    emit.on(["a", "b"], "c", function(a, p, e, sig) {
       sig.arg = { test: true }
     })
 
@@ -87,7 +87,7 @@ describe("emit", function() {
   test("on cancel", function() {
     var called
 
-    emit.on(["a", "b"], "c", function(p, a, d, e, sig) {
+    emit.on(["a", "b"], "c", function(a, p, e, sig) {
       sig.cancel = true
     })
 
@@ -101,7 +101,7 @@ describe("emit", function() {
   })
 
   test("on value", function() {
-    emit.on(["a", "b"], "c", function(p, a, d, e, sig) {
+    emit.on(["a", "b"], "c", function(a, p, e, sig) {
       sig.value = true
     })
 
@@ -109,7 +109,7 @@ describe("emit", function() {
   })
 
   test("on value (from function)", function() {
-    emit.on(["a", "b"], "c", function(p, a, d, e, sig) {
+    emit.on(["a", "b"], "c", function(a, p, e, sig) {
       sig.valueFn = function() {
         return true
       }
@@ -127,13 +127,7 @@ describe("emit", function() {
   })
 
   test("on value (from promise)", function(done) {
-    emit.on(["a", "b"], "c", function(
-      prop,
-      arg,
-      emit,
-      e,
-      sig
-    ) {
+    emit.on(["a", "b"], "c", function(a, p, e, sig) {
       return new Promise(function(resolve) {
         setTimeout(function() {
           sig.value = "hi"

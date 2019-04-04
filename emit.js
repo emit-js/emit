@@ -69,7 +69,7 @@ function emitOn(a, k, m, p, pr, r, s) {
   if (set) {
     set.forEach(function(fn) {
       if (!s.cancel) {
-        var out = fn(s.arg || a, p.arr, r.emit, p.event, s)
+        var out = fn(s.arg || a, p.arr, r.emit, s)
         if (out && out.then) {
           pr.push(out)
         } else if (out !== undefined) {
@@ -90,7 +90,7 @@ function emitBase(a, k, m, p, r) {
   // s - signal
   //
   var pr = [],
-    s = {},
+    s = { event: p.event },
     state = r.emit.state
 
   emitAny(a, k, state.any, p, pr, r, s)
@@ -132,7 +132,7 @@ function emitReturn(a, p, promise, r, s) {
 
   // prettier-ignore
   return hasValueFn
-    ? s.valueFn(s.arg || a, p.arr, r.emit, p.event, s)
+    ? s.valueFn(s.arg || a, p.arr, r.emit, s)
     : hasValue
       ? s.value :
       s.valuePromise
