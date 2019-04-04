@@ -1,6 +1,6 @@
 {
   "name": "@emit-js/emit",
-  "version": "3.2.2",
+  "version": "3.2.3",
   "description": "A javascript event emitter for a new ecosystem of observable libraries",
   "keywords": [
     "event",
