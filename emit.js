@@ -2,13 +2,13 @@
 /*prettier-ignore*/
 "use strict";
 
-// Helper variables
+// Constants
 //
 var empty = "",
   period = ".",
   strType = "string"
 
-// `emit` instance factory
+// Build an emitter function
 //
 module.exports = function emit() {
   var emit,
@@ -226,16 +226,12 @@ function setup() {
 
   for (var i = 0; i < args.length; i++) {
     var arg = args[i]
-    var isStr = typeof arg === strType
-    var isArr =
-      !isStr &&
-      Array.isArray(arg) &&
-      (!arg[0] || typeof arg[0] === strType)
-
-    if (isStr || isArr) {
-      k.arr = k.arr.concat(isStr ? [arg] : arg)
-    } else if (i === args.length - 1) {
-      a = arg && arg.hasOwnProperty("arg") ? arg.arg : arg
+    if (i === args.length - 1) {
+      a = arg
+    } else {
+      k.arr = k.arr.concat(
+        typeof arg === strType ? [arg] : arg
+      )
     }
   }
 

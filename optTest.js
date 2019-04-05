@@ -15,9 +15,9 @@ describe("opt", function() {
       args = Array.prototype.slice.call(arguments)
     })
 
-    return emit("a", "b", "c").then(function() {
+    return emit("a", "b", "c", null).then(function() {
       expect(args).toEqual([
-        undefined,
+        null,
         ["b", "c"],
         emit,
         {
@@ -35,9 +35,9 @@ describe("opt", function() {
       args = Array.prototype.slice.call(arguments)
     })
 
-    return emit("a").then(function() {
+    return emit("a", null).then(function() {
       expect(args).toEqual([
-        undefined,
+        null,
         [],
         emit,
         {

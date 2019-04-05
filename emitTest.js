@@ -27,7 +27,7 @@ describe("emit", function() {
       called = true
     })
 
-    return emit("a", "b", "c").then(function() {
+    return emit("a", "b", "c", null).then(function() {
       expect(called).toBe(true)
     })
   })
@@ -39,7 +39,7 @@ describe("emit", function() {
       called = true
     })
 
-    return emit("a", "b", "c").then(function() {
+    return emit("a", "b", "c", null).then(function() {
       expect(called).toBe(true)
     })
   })
@@ -105,7 +105,7 @@ describe("emit", function() {
       sig.value = true
     })
 
-    expect(emit("a", "b", "c")).toBe(true)
+    expect(emit("a", "b", "c", null)).toBe(true)
   })
 
   test("on value (from function)", function() {
@@ -115,7 +115,7 @@ describe("emit", function() {
       }
     })
 
-    expect(emit("a", "b", "c")).toBe(true)
+    expect(emit("a", "b", "c", null)).toBe(true)
   })
 
   test("on value (from return)", function() {
@@ -123,7 +123,7 @@ describe("emit", function() {
       return true
     })
 
-    expect(emit("a", "b", "c")).toBe(true)
+    expect(emit("a", "b", "c", null)).toBe(true)
   })
 
   test("on value (from promise)", function(done) {
@@ -136,7 +136,7 @@ describe("emit", function() {
       })
     })
 
-    emit("a", "b", "c").then(function(arg) {
+    emit("a", "b", "c", null).then(function(arg) {
       expect(arg).toBe("hi")
       done()
     })
@@ -149,7 +149,7 @@ describe("emit", function() {
       called = true
     })
 
-    return emit("a", "b", "c").then(function() {
+    return emit("a", "b", "c", null).then(function() {
       expect(called).toBe(true)
     })
   })
@@ -161,7 +161,7 @@ describe("emit", function() {
       called = true
     })
 
-    return emit("a", "b", "c").then(function() {
+    return emit("a", "b", "c", null).then(function() {
       expect(called).toBe(true)
     })
   })
@@ -179,7 +179,7 @@ describe("emit", function() {
 
     off()
 
-    return emit("a", "b", "c").then(function() {
+    return emit("a", "b", "c", null).then(function() {
       expect(called).not.toBe(true)
       expect(called2).toBe(true)
     })
