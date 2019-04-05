@@ -29,10 +29,11 @@ Emit better enables library authors to flexibly degrade if users choose not to i
 Let's create the `nextLaunch` listener, which displays upcoming rocket launches:
 
 ```js
+const api = "https://launchlibrary.net/1.3/launch/next"
+
 async function nextLaunch(count = 1, prop, emit) {
   const { launches } = await emit.http({
-    url:
-      "https://launchlibrary.net/1.3/launch/next/" + count,
+    url: api + "/" + count,
   })
   for (launch of launches) {
     emit("log", `location: ${launch.location.name}`)
