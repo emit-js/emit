@@ -6,9 +6,9 @@ A javascript event emitter for a new ecosystem of observable libraries.
 
 ## Mission
 
-We are defining a standard API for javascript event emitting.
+We aim to define a standard, flexible API for javascript event emitting.
 
-Using this API, **we aim to build an ecosystem of observable & composable libraries**.
+Using this API, **we are building an ecosystem of observable & composable libraries**.
 
 Libraries export "emit composers" — functions that add listeners to the emitter.
 
