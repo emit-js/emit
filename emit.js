@@ -26,6 +26,7 @@ module.exports = function emit() {
   emit.any = setup.bind({ fn: on, m: "any", r: r })
   emit.on = setup.bind({ fn: on, m: "on", r: r })
   emit.off = setup.bind({ fn: off, r: r })
+  emit.joinProps = joinProps
 
   return emit
 }
@@ -229,9 +230,7 @@ function setup() {
     if (i === args.length - 1) {
       a = arg
     } else {
-      k.arr = k.arr.concat(
-        typeof arg === strType ? [arg] : arg
-      )
+      k.arr = joinProps(arg, k.arr)
     }
   }
 
@@ -240,4 +239,8 @@ function setup() {
   p.event = k.arr[0]
 
   return this.fn(a, k, this.m, p, this.r)
+}
+
+function joinProps(arg, prop) {
+  return prop.concat(typeof arg === strType ? [arg] : arg)
 }
