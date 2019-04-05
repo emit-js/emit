@@ -242,5 +242,8 @@ function setup() {
 }
 
 function joinProps(arg, prop) {
+  if (arg === undefined) {
+    return prop
+  }
   return prop.concat(typeof arg === strType ? [arg] : arg)
 }
