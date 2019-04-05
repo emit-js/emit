@@ -233,7 +233,7 @@ function setup() {
     var arg = args[i]
     if (i === args.length - 1) {
       a = arg
-    } else {
+    } else if (arg) {
       k.arr = k.arr.concat(
         typeof arg === strType ? [arg] : arg
       )
