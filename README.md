@@ -32,18 +32,23 @@ Let's create the `nextLaunch` listener, which displays upcoming rocket launches:
 const api = "https://launchlibrary.net/1.3/launch/next"
 
 async function nextLaunch(count = 1, prop, emit) {
+  // Make request
   const { launches } = await emit.http({
     url: api + "/" + count,
   })
+  // Log launch info
   for (launch of launches) {
     emit("log", `location: ${launch.location.name}`)
     emit("log", `name:     ${launch.name}`)
     emit("log", `start:    ${launch.windowstart}\n`)
   }
+  // Return launches
   return launches
 }
 
+// Export composer function
 module.exports = function(emit) {
+  // Attach listener
   emit.any("nextLaunch", nextLaunch)
 }
 ```
