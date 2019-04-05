@@ -18,6 +18,7 @@ module.exports = function emit() {
 
   emit.state = {
     any: new Map(),
+    config: new Map(),
     events: new Set(),
     on: new Map(),
   }
@@ -26,7 +27,6 @@ module.exports = function emit() {
   emit.any = setup.bind({ fn: on, m: "any", r: r })
   emit.on = setup.bind({ fn: on, m: "on", r: r })
   emit.off = setup.bind({ fn: off, r: r })
-  emit.joinProps = joinProps
 
   return emit
 }
@@ -194,6 +194,11 @@ function on(a, k, m, p, r) {
   var s = r.emit.state,
     set
 
+  if (a.listener) {
+    s.config.set(p.event, { arg: a.arg })
+    a = a.listener
+  }
+
   if (s[m].has(k.str)) {
     set = s[m].get(k.str)
   } else {
@@ -230,7 +235,18 @@ function setup() {
     if (i === args.length - 1) {
       a = arg
     } else {
-      k.arr = joinProps(arg, k.arr)
+      k.arr = k.arr.concat(
+        typeof arg === strType ? [arg] : arg
+      )
+    }
+  }
+
+  if (!this.m) {
+    var config = this.r.emit.state.config.get(k.arr[0])
+
+    if (config && config.arg === false) {
+      k.arr.push(a)
+      a = undefined
     }
   }
 
@@ -239,11 +255,4 @@ function setup() {
   p.event = k.arr[0]
 
   return this.fn(a, k, this.m, p, this.r)
-}
-
-function joinProps(arg, prop) {
-  if (arg === undefined) {
-    return prop
-  }
-  return prop.concat(typeof arg === strType ? [arg] : arg)
 }

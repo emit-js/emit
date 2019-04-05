@@ -196,4 +196,18 @@ describe("emit", function() {
       expect(called).toBe(true)
     })
   })
+
+  test.only("no argument option", function() {
+    expect.assertions(2)
+
+    emit.any("a", {
+      arg: false,
+      listener: function(arg, prop) {
+        expect(arg).toBe(undefined)
+        expect(prop).toEqual(["b"])
+      },
+    })
+
+    return emit("a", "b")
+  })
 })
