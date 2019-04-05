@@ -26,13 +26,11 @@ Emit better enables library authors to flexibly degrade if users choose not to i
 
 ## Your first observable library
 
-Let's create the `nextLaunch` listener, which retrieves data about upcoming rocket launches:
+Let's create the `nextLaunch` listener, which displays upcoming rocket launches:
 
 ```js
 async function nextLaunch(count = 1, prop, emit) {
-  const {
-    body: { launches },
-  } = await emit.http({
+  const { launches } = await emit.http({
     url:
       "https://launchlibrary.net/1.3/launch/next/" + count,
   })
@@ -43,17 +41,13 @@ async function nextLaunch(count = 1, prop, emit) {
   }
   return launches
 }
-```
 
-Export an emit composer that adds a `nextLaunch` listener:
-
-```js
 module.exports = function(emit) {
   emit.any("nextLaunch", nextLaunch)
 }
 ```
 
-Save all of the above code as `nextLaunch.js`.
+Save the above code as `nextLaunch.js`.
 
 ## Using observable libraries
 
