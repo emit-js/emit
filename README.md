@@ -29,11 +29,18 @@ Emit better enables library authors to flexibly degrade if users choose not to i
 Let's create the `nextLaunch` listener, which retrieves data about upcoming rocket launches:
 
 ```js
-async function nextLaunch(count = 1) {
-  const { launches } = await emit.http({
+async function nextLaunch(count = 1, prop, emit) {
+  const {
+    body: { launches },
+  } = await emit.http({
     url:
       "https://launchlibrary.net/1.3/launch/next/" + count,
   })
+  for (launch of launches) {
+    emit("log", `location: ${launch.location.name}`)
+    emit("log", `name:     ${launch.name}`)
+    emit("log", `start:    ${launch.windowstart}\n`)
+  }
   return launches
 }
 ```
@@ -70,18 +77,14 @@ require("@emit-js/http")(emit)
 require("@emit-js/log")(emit)
 require("./nextLaunch")(emit)
 
-// Emit
+// Emit nextLaunch
 ;(async function() {
-  // Retrieve next launch
-  await emit.nextLaunch()
-
-  // Retrieve next two launches
-  await emit.nextLaunch(2)
+  await emit.nextLaunch(process.argv[2])
 })()
 ```
 
-Save the above code as `emit.js` and run it:
+Save the above code as `test.js` and run it:
 
 ```bash
-LOG=debug node emit.js
+node test.js 10
 ```
