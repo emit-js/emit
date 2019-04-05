@@ -194,11 +194,6 @@ function on(a, k, m, p, r) {
   var s = r.emit.state,
     set
 
-  if (a.listener) {
-    s.config.set(p.event, { arg: a.arg })
-    a = a.listener
-  }
-
   if (s[m].has(k.str)) {
     set = s[m].get(k.str)
   } else {
@@ -206,6 +201,9 @@ function on(a, k, m, p, r) {
     s[m].set(k.str, set)
 
     if (m === "any" && p.event && !p.length) {
+      if (a.listener) {
+        s.config.set(p.event, { arg: a.arg })
+      }
       r.emit[p.event] =
         r.emit[p.event] ||
         setup.bind({
@@ -217,7 +215,7 @@ function on(a, k, m, p, r) {
     }
   }
 
-  set.add(a)
+  set.add(a.listener || a)
 
   return off.bind(null, a, k, m, p, r)
 }
@@ -228,7 +226,8 @@ function setup() {
   var a,
     args = arguments,
     k = { arr: this.p ? [this.p.event] : [] },
-    p = {}
+    p = {},
+    s = this.r.emit.state
 
   for (var i = 0; i < args.length; i++) {
     var arg = args[i]
@@ -241,8 +240,8 @@ function setup() {
     }
   }
 
-  if (!this.m) {
-    var config = this.r.emit.state.config.get(k.arr[0])
+  if (!this.m && k.arr.length) {
+    var config = s.config.get(k.arr[0])
 
     if (config && config.arg === false) {
       k.arr.push(a)

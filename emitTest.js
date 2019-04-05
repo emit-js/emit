@@ -197,7 +197,7 @@ describe("emit", function() {
     })
   })
 
-  test.only("no argument option", function() {
+  test("no argument option", function() {
     expect.assertions(2)
 
     emit.any("a", {
