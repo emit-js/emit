@@ -2,7 +2,7 @@
 
 A javascript event emitter for a new ecosystem of observable libraries.
 
-![emit](emit.gif)
+![emit](docs/emit.gif)
 
 ## Mission
 
@@ -86,5 +86,7 @@ require("./nextLaunch")(emit)
 Save the above code as `test.js` and run it:
 
 ```bash
-node test.js 10
+node test.js 2
 ```
+
+![nextLaunch output](docs/nextLaunch.png)
