@@ -31,12 +31,12 @@ Let's create the `nextLaunch` listener, which displays upcoming rocket launches:
 ```js
 const api = "https://launchlibrary.net/1.3/launch/next"
 
-async function nextLaunch(count = 1, prop, emit) {
-  // Make request
+async function nextLaunch(arg, prop, emit) {
+  // HTTP request
   const { launches } = await emit.http({
-    url: api + "/" + count,
+    url: api + "/" + arg.count,
   })
-  // Log launch info
+  // Log launches
   for (launch of launches) {
     emit("log", `location: ${launch.location.name}`)
     emit("log", `name:     ${launch.name}`)
@@ -46,7 +46,7 @@ async function nextLaunch(count = 1, prop, emit) {
   return launches
 }
 
-// Export composer function
+// Export composer
 module.exports = function(emit) {
   // Attach listener
   emit.any("nextLaunch", nextLaunch)
@@ -79,14 +79,14 @@ require("./nextLaunch")(emit)
 
 // Emit nextLaunch
 ;(async function() {
-  await emit.nextLaunch(process.argv[2])
+  await emit.nextLaunch({ count: process.argv[2] })
 })()
 ```
 
 Save the above code as `test.js` and run it:
 
-```bash
-node test.js 2
-```
-
 ![nextLaunch output](docs/nextLaunch.png)
+
+Use `LOG=debug` to change the log level for debugging:
+
+![nextLaunch debug output](docs/nextLaunchDebug.png)
