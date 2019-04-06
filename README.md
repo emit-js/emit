@@ -87,6 +87,6 @@ Save the above code as `test.js` and run it:
 
 ![nextLaunch output](docs/nextLaunch.png)
 
-Use `LOG=debug` to change the log level for debugging:
+Use the `LOG=debug` env var to see all events:
 
 ![nextLaunch debug output](docs/nextLaunchDebug.png)
