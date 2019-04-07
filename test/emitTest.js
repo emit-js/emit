@@ -4,7 +4,7 @@
 var emit
 
 beforeEach(function() {
-  emit = require("./emit")()
+  emit = require("../")()
 })
 
 describe("emit", function() {

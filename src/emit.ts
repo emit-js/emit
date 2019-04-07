@@ -1,18 +1,16 @@
 /*global Map Promise Set*/
-/*prettier-ignore*/
-"use strict";
 
 // Constants
 //
-var empty = "",
+let empty = "",
   period = ".",
   strType = "string"
 
 // Build an emitter function
 //
-module.exports = function emit() {
-  var emit,
-    r = {}
+export = function emit() {
+  let emit,
+    r: { emit?: object } = {}
 
   emit = r.emit = setup.bind({ fn: emitBase, r: r })
 
@@ -42,7 +40,7 @@ function emitAny(a, k, m, p, pr, r, s) {
   // r - refs
   // s - signal
   //
-  var key
+  let key
 
   emitOn(a, undefined, m, p, pr, r, s)
 
@@ -63,14 +61,14 @@ function emitOn(a, k, m, p, pr, r, s) {
   // r - refs
   // s - signal
   //
-  var set = m.get(
+  let set = m.get(
     k ? (k.str !== undefined ? k.str : k) : empty
   )
 
   if (set) {
     set.forEach(function(fn) {
       if (!s.cancel) {
-        var out = fn(s.arg || a, p.arr, r.emit, s)
+        let out = fn(s.arg || a, p.arr, r.emit, s)
         if (out && out.then) {
           pr.push(out)
         } else if (out !== undefined) {
@@ -90,14 +88,14 @@ function emitBase(a, k, m, p, r) {
   // r - refs
   // s - signal
   //
-  var pr = [],
-    s = { event: p.event },
+  let pr = [],
+    s: { event: string, value?: any } = { event: p.event },
     state = r.emit.state
 
   emitAny(a, k, state.any, p, pr, r, s)
   emitOn(a, k, state.on, p, pr, r, s)
 
-  var promise = Promise.all(pr)
+  let promise = Promise.all(pr)
     .then(function(results) {
       state.events.delete(promise)
       return s.value === undefined
@@ -124,7 +122,7 @@ function emitReturn(a, p, promise, r, s) {
   // r - refs
   // s - signal
   //
-  var hasValue = s.value !== undefined,
+  let hasValue = s.value !== undefined,
     hasValueFn = s.valueFn !== undefined
 
   if (!hasValue) {
@@ -142,11 +140,12 @@ function emitReturn(a, p, promise, r, s) {
 // Run composer from promise (dynamic import).
 //
 function add(promise) {
-  var emit = this.r.emit,
+  let emit = this.r.emit,
     s = emit.state
 
   if (promise.then) {
     promise = promise.then(function(lib) {
+      // prettier-ignore
       return lib && lib.default
         ? (lib.default.default || lib.default)(emit)
         : lib
@@ -170,7 +169,7 @@ function off(a, k, m, p, r) {
   // m - map
   // r - refs
   //
-  var s = r.emit.state,
+  let s = r.emit.state,
     set = s[m].get(k.str)
 
   if (a && set) {
@@ -191,7 +190,7 @@ function on(a, k, m, p, r) {
     return
   }
 
-  var s = r.emit.state,
+  let s = r.emit.state,
     set
 
   if (s[m].has(k.str)) {
@@ -223,14 +222,14 @@ function on(a, k, m, p, r) {
 // Parse arguments for `emit`, `off`, `on`, and `any`
 //
 function setup() {
-  var a,
+  let a,
     args = arguments,
-    k = { arr: this.p ? [this.p.event] : [] },
-    p = {},
+    k: { arr: string[], str?: string } = { arr: this.p ? [this.p.event] : [] },
+    p: { arr?: string[], event?: string } = {},
     s = this.r.emit.state
 
-  for (var i = 0; i < args.length; i++) {
-    var arg = args[i]
+  for (let i = 0; i < args.length; i++) {
+    let arg = args[i]
     if (i === args.length - 1) {
       a = arg
     } else if (arg) {
@@ -239,7 +238,7 @@ function setup() {
   }
 
   if (!this.m && k.arr.length) {
-    var config = s.config.get(k.arr[0])
+    let config = s.config.get(k.arr[0])
 
     if (config && config.arg === false) {
       k.arr = joinProps(k.arr, a)

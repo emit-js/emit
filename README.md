@@ -2,7 +2,7 @@
 
 A javascript event emitter for a new ecosystem of observable libraries.
 
-![emit](docs/emit.gif)
+![emit](media/emit.gif)
 
 ## Mission
 
@@ -85,8 +85,8 @@ require("./nextLaunch")(emit)
 
 Save the above code as `test.js` and run it:
 
-![nextLaunch output](docs/nextLaunch.png)
+![nextLaunch output](media/nextLaunch.png)
 
 Use the `LOG=debug` environment variable to see all events:
 
-![nextLaunch debug output](docs/nextLaunchDebug.png)
+![nextLaunch debug output](media/nextLaunchDebug.png)
