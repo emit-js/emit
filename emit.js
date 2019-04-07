@@ -234,9 +234,7 @@ function setup() {
     if (i === args.length - 1) {
       a = arg
     } else if (arg) {
-      k.arr = k.arr.concat(
-        typeof arg === strType ? [arg] : arg
-      )
+      k.arr = joinProps(k.arr, arg)
     }
   }
 
@@ -244,7 +242,7 @@ function setup() {
     var config = s.config.get(k.arr[0])
 
     if (config && config.arg === false) {
-      k.arr.push(a)
+      k.arr = joinProps(k.arr, a)
       a = undefined
     }
   }
@@ -254,4 +252,8 @@ function setup() {
   p.event = k.arr[0]
 
   return this.fn(a, k, this.m, p, this.r)
+}
+
+function joinProps(arr, arg) {
+  return arr.concat(typeof arg === strType ? [arg] : arg)
 }

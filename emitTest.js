@@ -208,6 +208,6 @@ describe("emit", function() {
       },
     })
 
-    return emit("a", "b")
+    return emit("a", ["b"])
   })
 })
